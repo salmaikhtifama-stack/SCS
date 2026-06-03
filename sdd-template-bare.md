@@ -86,14 +86,18 @@ Berikut class-class yang terdapat dalam sistem SRCS beserta fungsinya:
 
 
 
-### 1.3 Definitions, Acronyms, and Abbreviations
-<!-- glossary of domain terms and abbreviations; keep alphabetized -->
-![alt text](![alt text](image.png)jpg)
+### Class Diagram
+(![alt text](1.PNG))
 
-| Term | Definition                                                                                                               |
-|------|--------------------------------------------------------------------------------------------------------------------------|
-| API  | Application Programming Interface - A set of definitions and protocols for building and integrating application software |
-| SDD  | Software Design Document - A document that describes the intended purpose, requirements, and nature of a software        |
+Class Diagram pada sistem SRCS menggambarkan struktur kelas-kelas yang ada di dalam sistem beserta atribut, method, dan hubungan antar kelasnya. Diagram ini menjadi fondasi utama dalam perancangan sistem berbasis Object Oriented karena menunjukkan bagaimana setiap objek saling terhubung dan berinteraksi satu sama lain.
+
+Hubungan antar class dalam sistem SRCS adalah sebagai berikut:
+•	Inheritance : Mahasiswa, Dosen, dan Admin mewarisi class User — artinya ketiga class tersebut mewarisi atribut dasar seperti nama, email, dan password dari class User, namun masing-masing memiliki atribut dan method tambahan sesuai perannya.
+•	Asosiasi : Mahasiswa/Dosen membuat Booking, Admin memverifikasi Booking, dan Booking terhubung ke Ruangan menggambarkan hubungan antar objek yang saling berinteraksi dalam alur peminjaman ruangan.
+•	Agregasi : Booking mengandung Fasilitas, artinya Fasilitas dapat berdiri sendiri tanpa harus ada Booking, namun Booking bisa memiliki satu atau lebih Fasilitas tambahan.
+
+Selain itu, Booking menghasilkan Notifikasi yang dikirim ke pengguna, dan data Booking ditampilkan di Dashboard sesuai role masing-masing pengguna.
+
 
 ### 1.4 References
 <!-- external sources cited (standards, specs, docs); include title, owner, version, date, and location -->
