@@ -86,7 +86,7 @@ Berikut class-class yang terdapat dalam sistem SRCS beserta fungsinya:
 
 
 
-### Class Diagram
+### D. Class Diagram
 (![alt text](1.PNG))
 
 Class Diagram pada sistem SRCS menggambarkan struktur kelas-kelas yang ada di dalam sistem beserta atribut, method, dan hubungan antar kelasnya. Diagram ini menjadi fondasi utama dalam perancangan sistem berbasis Object Oriented karena menunjukkan bagaimana setiap objek saling terhubung dan berinteraksi satu sama lain.
@@ -99,17 +99,98 @@ Hubungan antar class dalam sistem SRCS adalah sebagai berikut:
 Selain itu, Booking menghasilkan Notifikasi yang dikirim ke pengguna, dan data Booking ditampilkan di Dashboard sesuai role masing-masing pengguna.
 
 
-### 1.4 References
-<!-- external sources cited (standards, specs, docs); include title, owner, version, date, and location -->
+### E.	Activity Diagram Login
+Activity Diagram Login menggambarkan alur aktivitas yang terjadi ketika pengguna (Mahasiswa, Dosen, atau Admin) masuk ke dalam sistem SRCS. Diagram ini menunjukkan bagaimana sistem merespons setiap aksi pengguna, termasuk kondisi normal maupun kondisi alternatif seperti data salah atau kosong
 
-### 1.5 Document Overview
-<!-- summary of document organization and conventions -->
+(![alt text](diagram_login.PNG))
 
-## 2. Design Overview
-<!-- describes the system’s architecture and design approach -->
+•	Pink muda		: aksi yang dilakukan pengguna 
+•	Pink sedang		: respons dari sistem 
+•	Pink tua		: notifikasi berhasil 
+•	Pink gelap		: pesan error / peringatan 
+•	Pink pastel : diamond	: titik keputusan / decision
 
-### 2.1 Stakeholder Concerns
-<!-- identifies stakeholders and their main design-related interests -->
+Activity Diagram Login ini menggambarkan dua jalur utama:
+
+•	Jalur normal
+Pengguna membuka website, memilih menu login, mengisi username dan password, lalu menekan tombol login. Jika data valid, sistem menampilkan notifikasi berhasil dan langsung mengarahkan ke dashboard sesuai role masing-masing (mahasiswa, dosen, atau admin).
+•	Jalur alternatif
+Jika data tidak valid, sistem membedakan dua jenis kesalahan. Pertama, jika kolom kosong, muncul pesan "Data harus diisi". Kedua, jika username atau password salah, muncul pesan "Username/password salah". Keduanya mengarahkan pengguna kembali ke form untuk mencoba lagi.
+	
+
+### F.	Activity Diagram Booking Ruangan
+
+![alt text](bookingRuangan.png)
+
+Activity Diagram Booking Ruangan menggambarkan proses pengajuan peminjaman ruangan oleh Mahasiswa atau Dosen setelah berhasil login.
+
+•	Jalur normal
+Pengguna memilih menu booking, sistem menampilkan form, pengguna mengisi data pemesanan seperti tanggal, waktu, dan keperluan kegiatan, lalu mengupload surat persyaratan dalam format PDF. Setelah klik submit dan semua data lengkap, sistem menyimpan data ke database dan mengirim notifikasi "Booking berhasil dikirim". Status booking kemudian berubah menjadi menunggu verifikasi admin.
+•	Jalur alternatif 
+Sistem mengecek dua kemungkinan error. Pertama, jika data pemesanan belum lengkap, muncul pesan "Data belum lengkap" dan pengguna diarahkan kembali ke form isian. Kedua, jika surat persyaratan belum diupload, muncul pesan "Upload surat wajib" dan pengguna diarahkan kembali ke bagian upload.
+
+
+## G.	 Swimlane Diagram
+Login & Booking Ruangan
+
+![alt text](swimline.png)
+
+
+Swimlane Diagram ini membagi alur sistem ke dalam tiga jalur (lane)
+Berdasarkan aktor yang terlibat, yaitu User/Mahasiswa, Sistem, dan Admin. Tujuannya adalah untuk menunjukkan dengan jelas siapa yang bertanggung jawab atas setiap aktivitas dalam proses login dan booking ruangan.
+
+•	Proses Login: dimulai dari User yang membuka website dan memilih menu login. Sistem merespons dengan menampilkan form, lalu User mengisi dan mengirim data. Sistem kemudian memvalidasi,  jika valid, dashboard ditampilkan; jika tidak, pesan error muncul dan User diminta mengulang.
+•	Proses Booking: setelah login, User memilih menu booking. Sistem menampilkan form, User mengisi data dan mengupload surat persyaratan, lalu klik submit. Sistem mengecek kelengkapan data, jika lengkap, data disimpan ke database dan notifikasi dikirim ke Admin. Admin menerima notifikasi, melakukan verifikasi, lalu menyetujui atau menolak. Sistem memperbarui status booking dan mengirimkan notifikasi hasil ke User.
+
+
+### H.	Fokus Perancangan Antarmuka
+a.	Desain Antarmuka Inter-Modular
+Menggambarkan hubungan dan aliran data antar modul yang ada di dalam sistem SRCS. Setiap modul saling terhubung dan dikendalikan oleh aliran data yang mengalir dari satu modul ke modul lainnya 
+
+Diagram ini menunjukkan bagaimana setiap modul dalam SRCS saling terhubung dan berbagi data satu sama lain.
+
+Login menjadi pintu masuk utama: setelah autentikasi berhasil, pengguna diarahkan ke Dashboard yang berfungsi sebagai pusat navigasi sistem.
+
+Dari Dashboard, pengguna dapat mengakses empat modul utama. Cek Ruangan memungkinkan pengguna melihat ketersediaan ruangan secara real-time, dan hasilnya dapat langsung diteruskan ke modul Booking untuk memilih slot waktu. Modul Notifikasi menerima data dari Booking dan mengirimkan status peminjaman ke pengguna. Modul Approval Admin menerima data booking, lalu admin memverifikasi dan hasilnya dikirim kembali ke Dashboard untuk memperbarui data secara keseluruhan.
+
+![alt text](uiInterModular.png)
+
+b.	Desain Antarmuka Eksternal
+Desain Antarmuka Eksternal menggambarkan hubungan sistem SRCS dengan pihak atau perangkat di luar sistem itu sendiri, yaitu pengguna (Mahasiswa, Dosen, Admin), browser sebagai media akses, serta database dan server sebagai penyimpanan data. Sesuai materi, antarmuka eksternal mencakup antarmuka antar aplikasi dan antarmuka antara perangkat lunak dengan produsen/konsumen informasi non-manusia.
+
+![alt text](uiEksternal.png)
+
+Diagram ini menunjukkan bagaimana sistem SRCS berinteraksi dengan pihak dan perangkat di luar sistem.
+
+Dari sisi pengguna, Mahasiswa dan Dosen berinteraksi dengan sistem untuk melakukan booking dan mengecek ketersediaan ruangan. Admin Sapras berinteraksi untuk memverifikasi dan mengelola data ruangan. Ketiga pengguna ini mengakses sistem melalui Browser (Chrome, Edge, atau Firefox), browser mengirimkan input pengguna ke sistem dan sistem mengembalikan tampilan antarmuka.
+
+Dari sisi teknis, sistem terhubung dua arah dengan Database/Server, sistem menyimpan data booking ke database dan mengambil data kembali saat dibutuhkan. Setelah proses selesai, sistem mengirimkan Notifikasi status peminjaman kembali ke pengguna.
+
+c.	Desain Antarmuka Manusia-Komputer
+
+1.	Halaman Dashboard
+Dashboard adalah halaman pertama yang muncul setelah pengguna berhasil login. Tampilannya disesuaikan dengan role pengguna, pada contoh ini adalah mahasiswa. Halaman ini menampilkan ringkasan booking aktif, jumlah booking yang sedang menunggu persetujuan, dan total booking bulan ini. Di bawahnya terdapat daftar peminjaman aktif beserta statusnya (Disetujui / Menunggu) dan riwayat booking terbaru. Tombol + Booking Ruangan ditempatkan di pojok kanan atas agar mudah diakses kapan saja.
+ 
+![alt text](halamDashboard.png)
+
+2.	Halaman Cek Ketersediaan Ruangan
+Halaman ini menampilkan kalender mingguan yang menunjukkan ketersediaan ruangan secara real-time. Pengguna dapat memilih ruangan melalui dropdown di pojok kanan atas dan berpindah minggu menggunakan tombol navigasi kiri-kanan. Setiap slot waktu diberi kode warna yang jelas, hijau untuk tersedia, merah untuk sudah terbooking, dan kuning untuk menunggu persetujuan admin. Dengan tampilan ini pengguna langsung bisa melihat slot mana yang bisa dipesan tanpa perlu bertanya ke admin.
+
+![alt text](cekKetersediaan.png)
+
+3.	Halaman Admin	
+Halaman ini khusus untuk Admin Sapras. Menampilkan daftar semua permintaan booking yang masuk dalam bentuk tabel, dilengkapi filter berdasarkan tanggal dan ruangan. Setiap baris menampilkan nama pemohon, ruangan yang diminta, tanggal dan jam, serta status saat ini. Admin dapat langsung mengklik tombol Setujui atau Tolak pada setiap permintaan yang masih berstatus Menunggu, sedangkan yang sudah disetujui hanya menampilkan tombol Detail.
+
+![alt text](HalamanAdmin.png)
+
+
+4. Form Pemesanan Ruangan
+Form ini muncul ketika pengguna menekan tombol booking. Pengguna mengisi ruangan yang diinginkan melalui dropdown, menentukan tanggal, waktu mulai dan selesai, serta keperluan kegiatan. Terdapat area upload surat permohonan dalam format PDF maksimal 2 MB. Di bagian bawah tersedia checklist fasilitas tambahan yang bisa diminta seperti proyektor, sound system, mic wireless, AC tambahan, dan penataan kursi. Setelah semua terisi, pengguna menekan tombol Kirim Permintaan.
+
+
+![alt text](PemesananRuangan.png)
+
+
 
 ### 2.2 Selected Viewpoints
 <!-- lists viewpoints used to describe the system, their purpose, and addressed concerns -->
