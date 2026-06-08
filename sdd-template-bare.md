@@ -260,7 +260,7 @@ Berikut class-class yang terdapat dalam sistem SRCS beserta fungsinya:
 
 
 ### 3.2  Class Diagram
-(![alt text](.PNG))
+(![alt text](1.PNG))
 
 Class Diagram pada sistem SRCS menggambarkan struktur kelas-kelas yang ada di dalam sistem beserta atribut, method, dan hubungan antar kelasnya. Diagram ini menjadi fondasi utama dalam perancangan sistem berbasis Object Oriented karena menunjukkan bagaimana setiap objek saling terhubung dan berinteraksi satu sama lain.
 
