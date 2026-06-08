@@ -114,7 +114,7 @@ Dekat dengan dunia nyata:  objek dalam sistem seperti Ruangan, Booking, dan Noti
 
 ### 2.3 Desain Data
 1.	Mengidentifikasi dan menetapkan seluruh himpunan entity yang akan terlibat.
-* a.	Pengguna (Mencakup Mahasiswa, Dosen, Admin Sapras, dan Perwakilan Organisasi) 
+* a. Pengguna (Mencakup Mahasiswa, Dosen, Admin Sapras, dan Perwakilan Organisasi) 
 * b.	Ruangan 
 * c.	Pemesanan (Booking) 
 * d.	Fasilitas (Fasilitas tambahan di luar fasilitas bawaan ruangan)
