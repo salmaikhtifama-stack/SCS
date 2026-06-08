@@ -18,12 +18,12 @@ Rabu, 3 Juni 2026
   * [2.1 Penjelasan Sistem SRCS](#21-stakeholder-concerns)
   * [2.2 Alasan Menggunakan Arsitektur Object Oriented (OO)](#22-alasan-menggunakan-arsitektur-object-oriented-(OO))
 * [3. Design Views](#3-design-views)
-    [3.1 Identifikasi Objek Atau Class](#31-identifikasi-object)
-    [3.2 Class Diagram](#32-class-diagram)
-    [3.3 Activity Diagram Login ](#33-activity-diagram-login)
-    [3.4 Activity Diagram Booking Ruangan ](#34-activity-diagram-booking-ruangan)
-    [3.5 Swimlane Diagram](#35-swimlane-diagram)
-    [3.6 Fokus Perancangan Antar Muka](#36-fokus-perancangan-antar-muka)
+   * [3.1 Identifikasi Objek Atau Class](#31-identifikasi-object)
+   * [3.2 Class Diagram](#32-class-diagram)
+   * [3.3 Activity Diagram Login ](#33-activity-diagram-login)
+   * [3.4 Activity Diagram Booking Ruangan ](#34-activity-diagram-booking-ruangan)
+   * [3.5 Swimlane Diagram](#35-swimlane-diagram)
+   * [3.6 Fokus Perancangan Antar Muka](#36-fokus-perancangan-antar-muka)
 <!-- TOC -->
 
 ## Revision History
@@ -163,7 +163,7 @@ Jika data tidak valid, sistem membedakan dua jenis kesalahan. Pertama, jika kolo
 
 ### 3.4	Activity Diagram Booking Ruangan
 
-![alt text](bookingRuangan.png)
+(![alt text](bookingRuangan.png))
 
 Activity Diagram Booking Ruangan menggambarkan proses pengajuan peminjaman ruangan oleh Mahasiswa atau Dosen setelah berhasil login.
 
@@ -176,7 +176,7 @@ Sistem mengecek dua kemungkinan error. Pertama, jika data pemesanan belum lengka
 ## 3.5  Swimlane Diagram
 Login & Booking Ruangan
 
-![alt text](swimline.png)
+(![alt text](swimline.png))
 
 
 Swimlane Diagram ini membagi alur sistem ke dalam tiga jalur (lane)
@@ -196,12 +196,12 @@ Login menjadi pintu masuk utama: setelah autentikasi berhasil, pengguna diarahka
 
 Dari Dashboard, pengguna dapat mengakses empat modul utama. Cek Ruangan memungkinkan pengguna melihat ketersediaan ruangan secara real-time, dan hasilnya dapat langsung diteruskan ke modul Booking untuk memilih slot waktu. Modul Notifikasi menerima data dari Booking dan mengirimkan status peminjaman ke pengguna. Modul Approval Admin menerima data booking, lalu admin memverifikasi dan hasilnya dikirim kembali ke Dashboard untuk memperbarui data secara keseluruhan.
 
-![alt text](uiInterModular.png)
+(![alt text](uiInterModular.png))
 
 b.	Desain Antarmuka Eksternal
 Desain Antarmuka Eksternal menggambarkan hubungan sistem SRCS dengan pihak atau perangkat di luar sistem itu sendiri, yaitu pengguna (Mahasiswa, Dosen, Admin), browser sebagai media akses, serta database dan server sebagai penyimpanan data. Sesuai materi, antarmuka eksternal mencakup antarmuka antar aplikasi dan antarmuka antara perangkat lunak dengan produsen/konsumen informasi non-manusia.
 
-![alt text](uiEksternal.png)
+(![alt text](uiEksternal.png))
 
 Diagram ini menunjukkan bagaimana sistem SRCS berinteraksi dengan pihak dan perangkat di luar sistem.
 
@@ -214,24 +214,24 @@ c.	Desain Antarmuka Manusia-Komputer
 1.	Halaman Dashboard
 Dashboard adalah halaman pertama yang muncul setelah pengguna berhasil login. Tampilannya disesuaikan dengan role pengguna, pada contoh ini adalah mahasiswa. Halaman ini menampilkan ringkasan booking aktif, jumlah booking yang sedang menunggu persetujuan, dan total booking bulan ini. Di bawahnya terdapat daftar peminjaman aktif beserta statusnya (Disetujui / Menunggu) dan riwayat booking terbaru. Tombol + Booking Ruangan ditempatkan di pojok kanan atas agar mudah diakses kapan saja.
  
-![alt text](halamDashboard.png)
+(![alt text](halamDashboard.png))
 
 2.	Halaman Cek Ketersediaan Ruangan
 Halaman ini menampilkan kalender mingguan yang menunjukkan ketersediaan ruangan secara real-time. Pengguna dapat memilih ruangan melalui dropdown di pojok kanan atas dan berpindah minggu menggunakan tombol navigasi kiri-kanan. Setiap slot waktu diberi kode warna yang jelas, hijau untuk tersedia, merah untuk sudah terbooking, dan kuning untuk menunggu persetujuan admin. Dengan tampilan ini pengguna langsung bisa melihat slot mana yang bisa dipesan tanpa perlu bertanya ke admin.
 
-![alt text](cekKetersediaan.png)
+(![alt text](cekKetersediaan.png))
 
 3.	Halaman Admin	
 Halaman ini khusus untuk Admin Sapras. Menampilkan daftar semua permintaan booking yang masuk dalam bentuk tabel, dilengkapi filter berdasarkan tanggal dan ruangan. Setiap baris menampilkan nama pemohon, ruangan yang diminta, tanggal dan jam, serta status saat ini. Admin dapat langsung mengklik tombol Setujui atau Tolak pada setiap permintaan yang masih berstatus Menunggu, sedangkan yang sudah disetujui hanya menampilkan tombol Detail.
 
-![alt text](HalamanAdmin.png)
+(![alt text](HalamanAdmin.png))
 
 
 4. Form Pemesanan Ruangan
 Form ini muncul ketika pengguna menekan tombol booking. Pengguna mengisi ruangan yang diinginkan melalui dropdown, menentukan tanggal, waktu mulai dan selesai, serta keperluan kegiatan. Terdapat area upload surat permohonan dalam format PDF maksimal 2 MB. Di bagian bawah tersedia checklist fasilitas tambahan yang bisa diminta seperti proyektor, sound system, mic wireless, AC tambahan, dan penataan kursi. Setelah semua terisi, pengguna menekan tombol Kirim Permintaan.
 
 
-![alt text](PemesananRuangan.png)
+(![alt text](PemesananRuangan.png))
 
 
 
