@@ -78,31 +78,31 @@ Dokumen DDP ini terdiri dari beberapa bagian penting. Bab Pendahuluan menguraika
 Sistem yang dikembangkan dalam penelitian ini adalah Smart Room Campus System (SRCS) yang dibangun berbasis web application. Aplikasi berbasis web ini memungkinkan pengguna untuk mengakses sistem melalui browser tanpa perlu melakukan instalasi tambahan pada perangkat. Sistem dirancang agar dapat berjalan pada berbagai platform seperti komputer, laptop, maupun smartphone selama terhubung dengan jaringan internet. 
 
 Secara arsitektur, sistem menggunakan konsep client-server, dimana: 
-• Client merupakan perangkat pengguna (mahasiswa, dosen, admin) yang mengakses sistem melalui browser 
-• Server berfungsi sebagai pusat pengolahan data dan penyimpanan database 
+* Client merupakan perangkat pengguna (mahasiswa, dosen, admin) yang mengakses sistem melalui browser 
+* Server berfungsi sebagai pusat pengolahan data dan penyimpanan database 
 
 Sistem ini juga dirancang untuk: 
-• Mendukung akses multi-user secara bersamaan 
-• Menyediakan informasi secara real-time terkait ketersediaan ruangan 
-• Terintegrasi dengan database untuk penyimpanan data peminjaman Dengan pendekatan berbasis web ini, diharapkan sistem dapat memberikan kemudahan akses, fleksibilitas pengguna.
+* Mendukung akses multi-user secara bersamaan 
+* Menyediakan informasi secara real-time terkait ketersediaan ruangan 
+* Terintegrasi dengan database untuk penyimpanan data peminjaman Dengan pendekatan berbasis web ini, diharapkan sistem dapat memberikan kemudahan akses, fleksibilitas pengguna.
 
 
 ### 2.2 Alasan Menggunakan Arsitektur Object Oriented (OO)
 
 Objek dalam Sistem
 Smart Room Campus System memiliki entitas-entitas nyata yang secara alami dapat direpresentasikan sebagai objek, antara lain:
-•	User (Mahasiswa, Dosen, Admin Sapras): setiap pengguna memiliki data dan perilaku tersendiri
-•	Ruangan: memiliki atribut seperti nama, kapasitas, dan fasilitas
-•	Booking: merepresentasikan proses peminjaman ruangan
-•	Notifikasi: objek yang dikirim ke pengguna berdasarkan status booking
-•	Fasilitas: tambahan yang dapat diminta saat booking (proyektor, AC, dll)
+* User (Mahasiswa, Dosen, Admin Sapras): setiap pengguna memiliki data dan perilaku tersendiri
+*	Ruangan: memiliki atribut seperti nama, kapasitas, dan fasilitas
+*	Booking: merepresentasikan proses peminjaman ruangan
+* Notifikasi: objek yang dikirim ke pengguna berdasarkan status booking
+* Fasilitas: tambahan yang dapat diminta saat booking (proyektor, AC, dll)
 
 Hubungan Antar Objek
 Objek-objek dalam SRCS saling berinteraksi membentuk alur bisnis yang jelas:
-•	User melakukan Booking terhadap Ruangan
-•	Booking memiliki relasi ke Fasilitas yang diminta
-•	Admin memverifikasi Booking dan mengubah statusnya
-•	Notifikasi dikirim ke User berdasarkan perubahan status Booking
+* User melakukan Booking terhadap Ruangan
+* Booking memiliki relasi ke Fasilitas yang diminta
+* Admin memverifikasi Booking dan mengubah statusnya
+* Notifikasi dikirim ke User berdasarkan perubahan status Booking
 
 Hubungan ini wajar dalam OO karena Mahasiswa dan Dosen pada dasarnya sama-sama User, hanya berbeda hak akses , cukup dibuat satu class User yang diwarisi keduanya.
 Keuntungan OO pada Sistem SRCS:
@@ -265,9 +265,9 @@ Berikut class-class yang terdapat dalam sistem SRCS beserta fungsinya:
 Class Diagram pada sistem SRCS menggambarkan struktur kelas-kelas yang ada di dalam sistem beserta atribut, method, dan hubungan antar kelasnya. Diagram ini menjadi fondasi utama dalam perancangan sistem berbasis Object Oriented karena menunjukkan bagaimana setiap objek saling terhubung dan berinteraksi satu sama lain.
 
 Hubungan antar class dalam sistem SRCS adalah sebagai berikut:
-•	Inheritance : Mahasiswa, Dosen, dan Admin mewarisi class User — artinya ketiga class tersebut mewarisi atribut dasar seperti nama, email, dan password dari class User, namun masing-masing memiliki atribut dan method tambahan sesuai perannya.
-•	Asosiasi : Mahasiswa/Dosen membuat Booking, Admin memverifikasi Booking, dan Booking terhubung ke Ruangan menggambarkan hubungan antar objek yang saling berinteraksi dalam alur peminjaman ruangan.
-•	Agregasi : Booking mengandung Fasilitas, artinya Fasilitas dapat berdiri sendiri tanpa harus ada Booking, namun Booking bisa memiliki satu atau lebih Fasilitas tambahan.
+* Inheritance : Mahasiswa, Dosen, dan Admin mewarisi class User — artinya ketiga class tersebut mewarisi atribut dasar seperti nama, email, dan password dari class User, namun masing-masing memiliki atribut dan method tambahan sesuai perannya.
+*	Asosiasi : Mahasiswa/Dosen membuat Booking, Admin memverifikasi Booking, dan Booking terhubung ke Ruangan menggambarkan hubungan antar objek yang saling berinteraksi dalam alur peminjaman ruangan.
+*	Agregasi : Booking mengandung Fasilitas, artinya Fasilitas dapat berdiri sendiri tanpa harus ada Booking, namun Booking bisa memiliki satu atau lebih Fasilitas tambahan.
 
 Selain itu, Booking menghasilkan Notifikasi yang dikirim ke pengguna, dan data Booking ditampilkan di Dashboard sesuai role masing-masing pengguna.
 
@@ -277,17 +277,17 @@ Activity Diagram Login menggambarkan alur aktivitas yang terjadi ketika pengguna
 
 (![alt text](diagram_login.PNG))
 
-•	Pink muda		: aksi yang dilakukan pengguna 
-•	Pink sedang		: respons dari sistem 
-•	Pink tua		: notifikasi berhasil 
-•	Pink gelap		: pesan error / peringatan 
-•	Pink pastel : diamond	: titik keputusan / decision
+* Pink muda		: aksi yang dilakukan pengguna 
+*	Pink sedang		: respons dari sistem 
+*	Pink tua		: notifikasi berhasil 
+*	Pink gelap		: pesan error / peringatan 
+* Pink pastel : diamond	: titik keputusan / decision
 
 Activity Diagram Login ini menggambarkan dua jalur utama:
 
-•	Jalur normal
+*	Jalur normal
 Pengguna membuka website, memilih menu login, mengisi username dan password, lalu menekan tombol login. Jika data valid, sistem menampilkan notifikasi berhasil dan langsung mengarahkan ke dashboard sesuai role masing-masing (mahasiswa, dosen, atau admin).
-•	Jalur alternatif
+* Jalur alternatif
 Jika data tidak valid, sistem membedakan dua jenis kesalahan. Pertama, jika kolom kosong, muncul pesan "Data harus diisi". Kedua, jika username atau password salah, muncul pesan "Username/password salah". Keduanya mengarahkan pengguna kembali ke form untuk mencoba lagi.
   
 
@@ -297,9 +297,9 @@ Jika data tidak valid, sistem membedakan dua jenis kesalahan. Pertama, jika kolo
 
 Activity Diagram Booking Ruangan menggambarkan proses pengajuan peminjaman ruangan oleh Mahasiswa atau Dosen setelah berhasil login.
 
-•	Jalur normal
+*	Jalur normal
 Pengguna memilih menu booking, sistem menampilkan form, pengguna mengisi data pemesanan seperti tanggal, waktu, dan keperluan kegiatan, lalu mengupload surat persyaratan dalam format PDF. Setelah klik submit dan semua data lengkap, sistem menyimpan data ke database dan mengirim notifikasi "Booking berhasil dikirim". Status booking kemudian berubah menjadi menunggu verifikasi admin.
-•	Jalur alternatif 
+*	Jalur alternatif 
 Sistem mengecek dua kemungkinan error. Pertama, jika data pemesanan belum lengkap, muncul pesan "Data belum lengkap" dan pengguna diarahkan kembali ke form isian. Kedua, jika surat persyaratan belum diupload, muncul pesan "Upload surat wajib" dan pengguna diarahkan kembali ke bagian upload.
 
 
@@ -312,8 +312,8 @@ Login & Booking Ruangan
 Swimlane Diagram ini membagi alur sistem ke dalam tiga jalur (lane)
 Berdasarkan aktor yang terlibat, yaitu User/Mahasiswa, Sistem, dan Admin. Tujuannya adalah untuk menunjukkan dengan jelas siapa yang bertanggung jawab atas setiap aktivitas dalam proses login dan booking ruangan.
 
-•	Proses Login: dimulai dari User yang membuka website dan memilih menu login. Sistem merespons dengan menampilkan form, lalu User mengisi dan mengirim data. Sistem kemudian memvalidasi,  jika valid, dashboard ditampilkan; jika tidak, pesan error muncul dan User diminta mengulang.
-•	Proses Booking: setelah login, User memilih menu booking. Sistem menampilkan form, User mengisi data dan mengupload surat persyaratan, lalu klik submit. Sistem mengecek kelengkapan data, jika lengkap, data disimpan ke database dan notifikasi dikirim ke Admin. Admin menerima notifikasi, melakukan verifikasi, lalu menyetujui atau menolak. Sistem memperbarui status booking dan mengirimkan notifikasi hasil ke User.
+*	Proses Login: dimulai dari User yang membuka website dan memilih menu login. Sistem merespons dengan menampilkan form, lalu User mengisi dan mengirim data. Sistem kemudian memvalidasi,  jika valid, dashboard ditampilkan; jika tidak, pesan error muncul dan User diminta mengulang.
+*	Proses Booking: setelah login, User memilih menu booking. Sistem menampilkan form, User mengisi data dan mengupload surat persyaratan, lalu klik submit. Sistem mengecek kelengkapan data, jika lengkap, data disimpan ke database dan notifikasi dikirim ke Admin. Admin menerima notifikasi, melakukan verifikasi, lalu menyetujui atau menolak. Sistem memperbarui status booking dan mengirimkan notifikasi hasil ke User.
 
 
 ### 3.6	Fokus Perancangan Antarmuka
