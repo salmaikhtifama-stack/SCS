@@ -162,7 +162,7 @@ Pemesanan → tanggal_kegiatan, waktu_mulai, waktu_selesai, keperluan, file_sura
 | Detail_Fasilitas      | Detail_Fasilitas(id_booking FK, id_fasilitas FK)                                      |
 
 **Diagram**
-(![alt text](DiagramERDSCS.PNG))
+(![alt text](DiagramERDSCS.png))
 
 ### 2.4 Struktur File/Tabel (Kamus Data)
 
@@ -219,27 +219,27 @@ e. Tabel Detail Fasilitas
 Berikut adalah tangkapan layar implementasi skema database pada phpMyAdmin:
 
 Gambar 1: Struktur Database Keseluruhan (SCS)
-  (![alt text](DaftarTabel.PNG))
+  (![alt text](DaftarTabel.png))
 
 Gambar 2: Struktur Tabel Pengguna
-  (![alt text](TabelPengguna.PNG))
+  (![alt text](TabelPengguna.png))
 
 Gambar 3: Struktur Tabel Ruangan
-  (![alt text](TabelRuangan.PNG))
+  (![alt text](TabelRuangan.png))
 
 Gambar 4: Struktur Tabel Pemesanan
-  (![alt text](TabelPemesanan.PNG))
+  (![alt text](TabelPemesanan.png))
 
 Gambar 5: Struktur Tabel Fasilitas
-  (![alt text](TabelFasilitas.PNG))
+  (![alt text](TabelFasilitas.png))
 
 Gambar 6: Struktur Tabel Detail Fasilitas
-  (![alt text](TabelDetailFasilitas.PNG))
+  (![alt text](TabelDetailFasilitas.png))
 
 Gambar 6: Relasi Antar Entitas
-  (![alt text](RelasiEntitas.PNG))
+  (![alt text](RelasiEntitas.png))
 
-  (![alt text](SQL.PNG))
+  (![alt text](SQL.png))
 
 # 3. Design View
 
