@@ -17,6 +17,8 @@ Rabu, 3 Juni 2026
 * [2. Design Overview](#2-design-overview)
   * [2.1 Penjelasan Sistem SRCS](#21-stakeholder-concerns)
   * [2.2 Alasan Menggunakan Arsitektur Object Oriented (OO)](#22-alasan-menggunakan-arsitektur-object-oriented-(OO))
+  * [2.3 Desain Data](#23-Desain-Data)
+  * [2.4 Struktur File/Tabel (Kamus Data)](#24-Struktur-File/Tabel-(KamusData))
 * [3. Design Views](#3-design-views)
    * [3.1 Identifikasi Objek Atau Class](#31-identifikasi-object)
    * [3.2 Class Diagram](#32-class-diagram)
@@ -110,6 +112,134 @@ Tidak perlu mengulang kode: Mahasiswa dan Dosen berbagi data dasar seperti nama 
 Mudah dikembangkan: kalau ke depannya mau tambah fitur baru seperti IoT atau integrasi sistem akademik, tinggal tambah class baru tanpa mengubah yang sudah ada.
 Dekat dengan dunia nyata:  objek dalam sistem seperti Ruangan, Booking, dan Notifikasi mencerminkan hal-hal nyata di kampus, sehingga alur sistem lebih mudah dipahami semua pihak.
 
+### 2.3 Desain Data
+1.	Mengidentifikasi dan menetapkan seluruh himpunan entity yang akan terlibat.
+a.	Pengguna (Mencakup Mahasiswa, Dosen, Admin Sapras, dan Perwakilan Organisasi) 
+b.	Ruangan 
+c.	Pemesanan (Booking) 
+d.	Fasilitas (Fasilitas tambahan di luar fasilitas bawaan ruangan)
+
+2.	Menentukan atribut-atribut key dari masing-masing himpunan entitas.
+Setiap entitas membutuhkan atribut penjelas dan satu atribut unik sebagai penanda (Primary Key). 
+a.	Pengguna → id_user (PK), nim_nidn, nama_lengkap, role (mahasiswa/dosen/admin/organisasi), no_wa, password 
+b.	Ruangan →  id_ruangan (PK), nama_ruangan, kapasitas, status_aktif 
+c.	Pemesanan → id_booking (PK), tanggal_kegiatan, waktu_mulai, waktu_selesai, keperluan, file_surat, status_persetujuan 
+d.	Fasilitas → id_fasilitas (PK), nama_fasilitas, jumlah_tersedia 
+
+3.	Mengidentifikasi dan menetapkan seluruh himpunan relasi diantara himpunan entitas yang ada beserta Foreign-keynya.
+a.	Melakukan: Relasi antara Pengguna dan Pemesanan. 
+	FK: id_user menunjuk ke entitas Pengguna. FK ini diletakkan di dalam entitas Pemesanan.
+b.	Dipesan: Relasi antara Ruangan dan Pemesanan.
+	FK: id_ruangan menunjuk ke entitas Ruangan. FK ini diletakkan di dalam entitas Pemesanan.
+c.	Membutuhkan: Relasi antara Pemesanan dan Fasilitas.
+	Karena satu pemesanan bisa memakai banyak fasilitas, dan satu fasilitas bisa dipakai di banyak pemesanan, relasi ini memunculkan tabel perantara/detail baru, yaitu Detail_Fasilitas.
+	FK: id_booking menunjuk ke Pemesanan dan id_fasilitas menunjuk ke Fasilitas. Kedua FK ini diletakkan di dalam tabel Detail_Fasilitas.
+
+4.	Menentukan derajat dan kardinality rasio relasi untuk setiap himpunan relasi.
+Menetapkan batasan jumlah interaksi antar-entitas.
+a.	Pengguna (1) : Pemesanan (M) → Satu pengguna dapat melakukan banyak pemesanan. 
+b.	Ruangan (1) : Pemesanan (M) → Satu ruangan dapat dipesan berkali-kali pada waktu yang berbeda. 
+c.	Pemesanan (M) : Fasilitas (M) → Banyak pemesanan dapat memakai banyak fasilitas tambahan. 
+
+5.	Menentukan Partisipan constraint dari suatu relasi untuk setiap himpunan relasi.
+a.	Pengguna - Pemesanan = Partial. (Tidak semua pengguna yang terdaftar di sistem pasti pernah meminjam ruangan). 
+b.	Ruangan - Pemesanan = Partial. (Bisa jadi ada ruangan baru yang belum pernah dipesan sama sekali). 
+c.	Pemesanan - Pengguna & Ruangan = Total. (Setiap data pemesanan yang masuk pasti terikat secara wajib dengan 1 pengguna yang meminjam dan 1 ruangan yang dipinjam).
+
+6.	Melengkapi himpunan relasi dengan atribut-atribut yang bukan kunci (non-key)
+Pemesanan → tanggal_kegiatan, waktu_mulai, waktu_selesai, keperluan, file_surat, status_persetujuan.
+
+7.  Mapping File (Relasi ke Tabel)
+
+**Mapping Tabel**
+
+| Entitas/Relasi        | Mapping Tabel                                                                         |
+| :---                  | :---                                                                                  |
+| Pengguna              | Pengguna(id_user PK, nim_nidn, nama_lengkap, role, no_wa, password)                   |
+| Ruangan               | Ruangan(id_ruangan PK, nama_ruangan, kapasitas, status_aktif)                         |
+| Pemesanan             | Pemesanan(id_booking PK, id_user FK, id_ruangan FK, tanggal_kegiatan, waktu_mulai, waktu_selesai, keperluan, file_surat, status_persetujuan)                                                       |
+| Fasilitas             | Fasilitas(id_fasilitas PK, nama_fasilitas, jumlah_tersedia)                           |
+| Detail_Fasilitas      | Detail_Fasilitas(id_booking FK, id_fasilitas FK)                                      |
+
+**Diagram**
+(![alt text](DiagramERDSCS.PNG))
+
+### 2.4 Struktur File/Tabel (Kamus Data)
+
+a. Tabel Pengguna
+
+| Field          | Tipe Data | Keterangan                           |
+| :---           | :---      | :---                                 |
+| id_user        | VARCHAR   | Primary Key                          | 
+| nim_nidn       | VARCHAR   | Nomor Induk Mahasiswa/Dosen          |
+| nama_lengkap   | VARCHAR   | Nama lengkap pengguna                |
+| role           | ENUM      | Mahasiswa, Dosen, Admin, Organisasi  |
+| no_wa          | VARCHAR   | Nomor WhatsApp                       |
+| password       | VARCHAR   | Kata sandi login                     |
+
+b. Tabel Ruangan
+
+| Field         | Tipe Data   | Keterangan                          |
+| :---          | :---        | :---                                |
+| id_ruangan    | VARCHAR     | Primary Key                         |
+| nama_ruangan  | VARCHAR     | Nama ruangan                        |
+| kapasitas     | INT         | Daya tampung maksimal ruangan       |
+| status_aktif  | ENUM        | Aktif, Tidak Aktif                  |
+
+c. Tabel Pemesanan
+
+| Field               | Tipe Data | Keterangan                          |
+| :---                | :---      | :---                                |
+| id_booking          | VARCHAR   | Primary Key                         |
+| id_user             | VARCHAR   | Foreign Key → Pengguna              |
+| id_ruangan          | VARCHAR   | Foreign Key → Ruangan               |
+| tanggal_kegiatan    | DATE      | Tanggal penggunaan ruangan          |
+| waktu_mulai         | TIME      | Jam mulai kegiatan                  |
+| waktu_selesai       | TIME      | Jam selesai kegiatan                |
+| keperluan           | TEXT      | Deskripsi atau nama kegiatan        |
+| file_surat          | VARCHAR   | Direktori file dokumen persyaratan  |
+| status_persetujuan  | ENUM      | Menunggu, Disetujui, Ditolak        |
+
+d. Tabel Fasilitas
+
+| Field           | Tipe Data | Keterangan               |
+| :---            | :---      | :---                     |
+| id_fasilitas    | VARCHAR   | Primary Key              |
+| nama_fasilitas  | VARCHAR   | Nama fasilitas           |
+| jumlah_tersedia | INT       | Stok fasilitas yang ada  |
+
+e. Tabel Detail Fasilitas
+
+| Field         | Tipe Data | Keterangan              |
+| :---          | :---      | :---                    |
+| id_booking    | VARCHAR   | Foreign Key → Pemesanan |
+| id_fasilitas  | VARCHAR   | Foreign Key → Fasilitas |
+
+9. Database
+Berikut adalah tangkapan layar implementasi skema database pada phpMyAdmin:
+
+Gambar 1: Struktur Database Keseluruhan (SCS)
+  (![alt text](DaftarTabel.PNG))
+
+Gambar 2: Struktur Tabel Pengguna
+  (![alt text](TabelPengguna.PNG))
+
+Gambar 3: Struktur Tabel Ruangan
+  (![alt text](TabelRuangan.PNG))
+
+Gambar 4: Struktur Tabel Pemesanan
+  (![alt text](TabelPemesanan.PNG))
+
+Gambar 5: Struktur Tabel Fasilitas
+  (![alt text](TabelFasilitas.PNG))
+
+Gambar 6: Struktur Tabel Detail Fasilitas
+  (![alt text](TabelDetailFasilitas.PNG))
+
+Gambar 6: Relasi Antar Entitas
+  (![alt text](RelasiEntitas.PNG))
+
+  (![alt text](SQL.PNG))
 
 # 3. Design View
 
@@ -130,7 +260,7 @@ Berikut class-class yang terdapat dalam sistem SRCS beserta fungsinya:
 
 
 ### 3.2  Class Diagram
-(![alt text](1.PNG))
+(![alt text](.PNG))
 
 Class Diagram pada sistem SRCS menggambarkan struktur kelas-kelas yang ada di dalam sistem beserta atribut, method, dan hubungan antar kelasnya. Diagram ini menjadi fondasi utama dalam perancangan sistem berbasis Object Oriented karena menunjukkan bagaimana setiap objek saling terhubung dan berinteraksi satu sama lain.
 
@@ -159,7 +289,7 @@ Activity Diagram Login ini menggambarkan dua jalur utama:
 Pengguna membuka website, memilih menu login, mengisi username dan password, lalu menekan tombol login. Jika data valid, sistem menampilkan notifikasi berhasil dan langsung mengarahkan ke dashboard sesuai role masing-masing (mahasiswa, dosen, atau admin).
 •	Jalur alternatif
 Jika data tidak valid, sistem membedakan dua jenis kesalahan. Pertama, jika kolom kosong, muncul pesan "Data harus diisi". Kedua, jika username atau password salah, muncul pesan "Username/password salah". Keduanya mengarahkan pengguna kembali ke form untuk mencoba lagi.
-	
+  
 
 ### 3.4	Activity Diagram Booking Ruangan
 
@@ -232,62 +362,3 @@ Form ini muncul ketika pengguna menekan tombol booking. Pengguna mengisi ruangan
 
 
 (![alt text](PemesananRuangan.PNG))
-
-
-
-### 2.2 Selected Viewpoints
-<!-- lists viewpoints used to describe the system, their purpose, and addressed concerns -->
-
-#### 2.2.1 Context
-<!-- system boundaries, external actors, and interactions -->
-
-#### 2.2.2 Composition
-<!-- major components/subsystems and how they are organized -->
-
-#### 2.2.3 Logical
-<!-- main abstractions (classes, interfaces) and relationships -->
-
-#### 2.2.4 Physical
-<!-- hardware topology and infrastructure constraints -->
-
-#### 2.2.5 Structure
-<!-- internal organization of components and connectors -->
-
-#### 2.2.6 Dependency
-<!-- relationships and dependencies among design elements -->
-
-#### 2.2.7 Information
-<!-- data structures, persistence, and data management -->
-
-#### 2.2.8 Interface
-<!-- contracts between components or with external systems -->
-
-#### 2.2.9 Interaction
-<!-- runtime message flow and collaboration among components -->
-
-#### 2.2.10 Algorithm
-<!-- processing logic, steps, and key computations -->
-
-#### 2.2.11 State Dynamics
-<!-- states, transitions, and events affecting system behavior -->
-
-#### 2.2.12 Concurrency
-<!-- handling of parallelism, synchronization, and ordering -->
-
-#### 2.2.13 Patterns
-<!-- design or architectural patterns applied and their roles -->
-
-#### 2.2.14 Deployment
-<!-- mapping of software components to physical nodes or environments -->
-
-#### 2.2.15 Resources
-<!-- resource use, allocation, and management (e.g., memory, threads) -->
-
-## 3. Design Views
-<!-- detailed architectural and design elements, diagrams, and rationale -->
-
-## 4. Decisions
-<!-- major design or architectural choices and their justifications -->
-
-## 5. Appendixes
-<!-- supporting material such as models, datasets, or references -->
