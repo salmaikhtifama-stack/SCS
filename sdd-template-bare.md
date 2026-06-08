@@ -114,37 +114,37 @@ Dekat dengan dunia nyata:  objek dalam sistem seperti Ruangan, Booking, dan Noti
 
 ### 2.3 Desain Data
 1.	Mengidentifikasi dan menetapkan seluruh himpunan entity yang akan terlibat.
-a.	Pengguna (Mencakup Mahasiswa, Dosen, Admin Sapras, dan Perwakilan Organisasi) 
-b.	Ruangan 
-c.	Pemesanan (Booking) 
-d.	Fasilitas (Fasilitas tambahan di luar fasilitas bawaan ruangan)
+* a.	Pengguna (Mencakup Mahasiswa, Dosen, Admin Sapras, dan Perwakilan Organisasi) 
+* b.	Ruangan 
+* c.	Pemesanan (Booking) 
+* d.	Fasilitas (Fasilitas tambahan di luar fasilitas bawaan ruangan)
 
 2.	Menentukan atribut-atribut key dari masing-masing himpunan entitas.
 Setiap entitas membutuhkan atribut penjelas dan satu atribut unik sebagai penanda (Primary Key). 
-a.	Pengguna → id_user (PK), nim_nidn, nama_lengkap, role (mahasiswa/dosen/admin/organisasi), no_wa, password 
-b.	Ruangan →  id_ruangan (PK), nama_ruangan, kapasitas, status_aktif 
-c.	Pemesanan → id_booking (PK), tanggal_kegiatan, waktu_mulai, waktu_selesai, keperluan, file_surat, status_persetujuan 
-d.	Fasilitas → id_fasilitas (PK), nama_fasilitas, jumlah_tersedia 
+* a.	Pengguna → id_user (PK), nim_nidn, nama_lengkap, role (mahasiswa/dosen/admin/organisasi), no_wa, password 
+* b.	Ruangan →  id_ruangan (PK), nama_ruangan, kapasitas, status_aktif 
+* c.	Pemesanan → id_booking (PK), tanggal_kegiatan, waktu_mulai, waktu_selesai, keperluan, file_surat, status_persetujuan 
+* d.	Fasilitas → id_fasilitas (PK), nama_fasilitas, jumlah_tersedia 
 
 3.	Mengidentifikasi dan menetapkan seluruh himpunan relasi diantara himpunan entitas yang ada beserta Foreign-keynya.
-a.	Melakukan: Relasi antara Pengguna dan Pemesanan. 
+* a.	Melakukan: Relasi antara Pengguna dan Pemesanan. 
 	FK: id_user menunjuk ke entitas Pengguna. FK ini diletakkan di dalam entitas Pemesanan.
-b.	Dipesan: Relasi antara Ruangan dan Pemesanan.
+* b.	Dipesan: Relasi antara Ruangan dan Pemesanan.
 	FK: id_ruangan menunjuk ke entitas Ruangan. FK ini diletakkan di dalam entitas Pemesanan.
-c.	Membutuhkan: Relasi antara Pemesanan dan Fasilitas.
+* c.	Membutuhkan: Relasi antara Pemesanan dan Fasilitas.
 	Karena satu pemesanan bisa memakai banyak fasilitas, dan satu fasilitas bisa dipakai di banyak pemesanan, relasi ini memunculkan tabel perantara/detail baru, yaitu Detail_Fasilitas.
 	FK: id_booking menunjuk ke Pemesanan dan id_fasilitas menunjuk ke Fasilitas. Kedua FK ini diletakkan di dalam tabel Detail_Fasilitas.
 
 4.	Menentukan derajat dan kardinality rasio relasi untuk setiap himpunan relasi.
 Menetapkan batasan jumlah interaksi antar-entitas.
-a.	Pengguna (1) : Pemesanan (M) → Satu pengguna dapat melakukan banyak pemesanan. 
-b.	Ruangan (1) : Pemesanan (M) → Satu ruangan dapat dipesan berkali-kali pada waktu yang berbeda. 
-c.	Pemesanan (M) : Fasilitas (M) → Banyak pemesanan dapat memakai banyak fasilitas tambahan. 
+* a.	Pengguna (1) : Pemesanan (M) → Satu pengguna dapat melakukan banyak pemesanan. 
+* b.	Ruangan (1) : Pemesanan (M) → Satu ruangan dapat dipesan berkali-kali pada waktu yang berbeda. 
+* c.	Pemesanan (M) : Fasilitas (M) → Banyak pemesanan dapat memakai banyak fasilitas tambahan. 
 
 5.	Menentukan Partisipan constraint dari suatu relasi untuk setiap himpunan relasi.
-a.	Pengguna - Pemesanan = Partial. (Tidak semua pengguna yang terdaftar di sistem pasti pernah meminjam ruangan). 
-b.	Ruangan - Pemesanan = Partial. (Bisa jadi ada ruangan baru yang belum pernah dipesan sama sekali). 
-c.	Pemesanan - Pengguna & Ruangan = Total. (Setiap data pemesanan yang masuk pasti terikat secara wajib dengan 1 pengguna yang meminjam dan 1 ruangan yang dipinjam).
+* a.	Pengguna - Pemesanan = Partial. (Tidak semua pengguna yang terdaftar di sistem pasti pernah meminjam ruangan). 
+* b.	Ruangan - Pemesanan = Partial. (Bisa jadi ada ruangan baru yang belum pernah dipesan sama sekali). 
+* c.	Pemesanan - Pengguna & Ruangan = Total. (Setiap data pemesanan yang masuk pasti terikat secara wajib dengan 1 pengguna yang meminjam dan 1 ruangan yang dipinjam).
 
 6.	Melengkapi himpunan relasi dengan atribut-atribut yang bukan kunci (non-key)
 Pemesanan → tanggal_kegiatan, waktu_mulai, waktu_selesai, keperluan, file_surat, status_persetujuan.
